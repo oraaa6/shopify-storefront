@@ -19,7 +19,7 @@ export const getStaticProps = fetchStaticProps(async () => {
 export default function Page(props: PageProps<typeof getStaticProps>) {
   return (
     <StoreLayout>
-      <NextSeo title="Brecelets" description="Luxurious bracelets from Next Shopify Storefront" />
+      <NextSeo title="Earrings" description="Luxurious earrings from Next Shopify Storefront" />
       <ProductListCollectionSection data={props.data.productCollectionSection} handle={HANDLE}/>
     </StoreLayout>
   );
