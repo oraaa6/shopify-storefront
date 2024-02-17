@@ -11,7 +11,6 @@ enum SortKey {
   HIGH_TO_LOW = 'Highest price'
 }
 
-
 export async function fetchProductListSection(cursor?: string) {
   const { products } = await storefront.query({
     products: [
@@ -47,13 +46,12 @@ export async function fetchProductListSection(cursor?: string) {
 }
 
 export function ProductListSection(props: DataProps<typeof fetchProductListSection>) {
-
   const [pages, setPages] = useState([props.data]);
   const [sortKey, setSortKey] = useState<SortKey>(SortKey.ALL)
   const lastPage = pages[pages.length - 1];
   const lastCursor = lastPage.edges[lastPage.edges.length - 1].cursor;
   const hasNextPage = lastPage.pageInfo.hasNextPage;
-
+  const sortOptions = (Object.keys(SortKey) as Array<keyof typeof SortKey>).map((key) => ({name: SortKey[key]}))
 
   const [loader, load] = useAsyncFn(async () => {
     let productList;
@@ -98,7 +96,7 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
   return (
     <section>
       <div className='flex flex-col items-center justify-center gap-5 lg:flex-row lg:items-start'>
-        <Select onChange={sortProduct} options={[{ name: SortKey.ALL },{ name: SortKey.LOW_TO_HIGH },{ name: SortKey.HIGH_TO_LOW }]}/>
+        <Select onChange={sortProduct} options={sortOptions}/>
       <div className='flex justify-center'>
         <h2 className="sr-only">Products</h2>
         <div className="m-auto mb-10 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
