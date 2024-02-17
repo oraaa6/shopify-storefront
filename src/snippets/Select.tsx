@@ -7,9 +7,10 @@ export type Option = Record<'name', string>;
 type SelectProps<T> = {
   onChange: (value: T) => void;
   options: T[];
+  label?: string;
 };
 
-export function Select({ onChange, options }: SelectProps<Option>) {
+export function Select({ onChange, options, label }: SelectProps<Option>) {
   const [selected, setSelected] = useState(options[0]);
 
   const onHandleChange = (value: Option) => {
@@ -24,7 +25,7 @@ export function Select({ onChange, options }: SelectProps<Option>) {
   return (
     <div className="w-48">
       <Listbox value={selected} onChange={onHandleChange}>
-        <Listbox.Label>Sort by</Listbox.Label>
+      {label && <Listbox.Label>{label}</Listbox.Label>}
         <div className="relative mt-1">
           <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
             <span className="block truncate">{selected.name}</span>

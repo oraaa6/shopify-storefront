@@ -96,7 +96,7 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
   return (
     <section>
       <div className='flex flex-col items-center justify-center gap-5 lg:flex-row lg:items-start'>
-        <Select onChange={sortProduct} options={sortOptions}/>
+        <Select onChange={sortProduct} options={sortOptions} label="Sort by:"/>
       <div className='flex justify-center'>
         <h2 className="sr-only">Products</h2>
         <div className="m-auto mb-10 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
