@@ -1,6 +1,13 @@
 /* eslint-disable */
 
 export const AllTypesProps: Record<string,any> = {
+	ApplePayWalletContentInput:{
+		billingAddress:"MailingAddressInput",
+		header:"ApplePayWalletHeaderInput"
+	},
+	ApplePayWalletHeaderInput:{
+
+	},
 	Article:{
 		comments:{
 
@@ -21,6 +28,11 @@ export const AllTypesProps: Record<string,any> = {
 	ArticleSortKeys: "enum" as const,
 	AttributeInput:{
 
+	},
+	BaseCartLine:{
+		attribute:{
+
+		}
 	},
 	Blog:{
 		articleByHandle:{
@@ -47,22 +59,40 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		lines:{
 
+		},
+		metafield:{
+
+		},
+		metafields:{
+			identifiers:"HasMetafieldsIdentifier"
 		}
 	},
 	CartBuyerIdentityInput:{
 		countryCode:"CountryCode",
 		deliveryAddressPreferences:"DeliveryAddressInput"
 	},
+	CartCardSource: "enum" as const,
 	CartDeliveryGroup:{
 		cartLines:{
 
 		}
 	},
+	CartDirectPaymentMethodInput:{
+		billingAddress:"MailingAddressInput",
+		cardSource:"CartCardSource"
+	},
 	CartErrorCode: "enum" as const,
+	CartFreePaymentMethodInput:{
+		billingAddress:"MailingAddressInput"
+	},
 	CartInput:{
 		attributes:"AttributeInput",
 		lines:"CartLineInput",
-		buyerIdentity:"CartBuyerIdentityInput"
+		buyerIdentity:"CartBuyerIdentityInput",
+		metafields:"CartInputMetafieldInput"
+	},
+	CartInputMetafieldInput:{
+
 	},
 	CartLine:{
 		attribute:{
@@ -75,8 +105,24 @@ export const AllTypesProps: Record<string,any> = {
 	CartLineUpdateInput:{
 		attributes:"AttributeInput"
 	},
+	CartMetafieldDeleteInput:{
+
+	},
+	CartMetafieldsSetInput:{
+
+	},
+	CartPaymentInput:{
+		amount:"MoneyInput",
+		freePaymentMethod:"CartFreePaymentMethodInput",
+		directPaymentMethod:"CartDirectPaymentMethodInput",
+		walletPaymentMethod:"CartWalletPaymentMethodInput"
+	},
 	CartSelectedDeliveryOptionInput:{
 
+	},
+	CartWalletPaymentMethodInput:{
+		applePayWalletContent:"ApplePayWalletContentInput",
+		shopPayWalletContent:"ShopPayWalletContentInput"
 	},
 	Checkout:{
 		discountApplications:{
@@ -124,6 +170,12 @@ export const AllTypesProps: Record<string,any> = {
 	Color: `scalar.Color` as const,
 	Comment:{
 		content:{
+
+		}
+	},
+	CompletionErrorCode: "enum" as const,
+	ComponentizableCartLine:{
+		attribute:{
 
 		}
 	},
@@ -214,6 +266,14 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	JSON: `scalar.JSON` as const,
 	LanguageCode: "enum" as const,
+	Location:{
+		metafield:{
+
+		},
+		metafields:{
+			identifiers:"HasMetafieldsIdentifier"
+		}
+	},
 	LocationSortKeys: "enum" as const,
 	MailingAddress:{
 		formatted:{
@@ -223,17 +283,33 @@ export const AllTypesProps: Record<string,any> = {
 	MailingAddressInput:{
 
 	},
+	Market:{
+		metafield:{
+
+		},
+		metafields:{
+			identifiers:"HasMetafieldsIdentifier"
+		}
+	},
 	MediaContentType: "enum" as const,
 	MediaHost: "enum" as const,
+	MediaPresentation:{
+		asJson:{
+			format:"MediaPresentationFormat"
+		}
+	},
+	MediaPresentationFormat: "enum" as const,
 	MenuItemType: "enum" as const,
 	Metafield:{
 		references:{
 
 		}
 	},
+	MetafieldDeleteErrorCode: "enum" as const,
 	MetafieldFilter:{
 
 	},
+	MetafieldsSetUserErrorCode: "enum" as const,
 	Metaobject:{
 		field:{
 
@@ -273,11 +349,23 @@ export const AllTypesProps: Record<string,any> = {
 		cartLinesUpdate:{
 			lines:"CartLineUpdateInput"
 		},
+		cartMetafieldDelete:{
+			input:"CartMetafieldDeleteInput"
+		},
+		cartMetafieldsSet:{
+			metafields:"CartMetafieldsSetInput"
+		},
 		cartNoteUpdate:{
 
 		},
+		cartPaymentUpdate:{
+			payment:"CartPaymentInput"
+		},
 		cartSelectedDeliveryOptionsUpdate:{
 			selectedDeliveryOptions:"CartSelectedDeliveryOptionInput"
+		},
+		cartSubmitForCompletion:{
+
 		},
 		checkoutAttributesUpdateV2:{
 			input:"CheckoutAttributesUpdateV2Input"
@@ -410,6 +498,8 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	PageSortKeys: "enum" as const,
 	PaymentTokenType: "enum" as const,
+	PredictiveSearchLimitScope: "enum" as const,
+	PredictiveSearchType: "enum" as const,
 	PriceRangeFilter:{
 
 	},
@@ -454,6 +544,7 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	ProductImageSortKeys: "enum" as const,
 	ProductMediaSortKeys: "enum" as const,
+	ProductRecommendationIntent: "enum" as const,
 	ProductSortKeys: "enum" as const,
 	ProductVariant:{
 		metafield:{
@@ -471,6 +562,9 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	ProductVariantSortKeys: "enum" as const,
 	QueryRoot:{
+		article:{
+
+		},
 		articles:{
 			sortKey:"ArticleSortKeys"
 		},
@@ -484,6 +578,9 @@ export const AllTypesProps: Record<string,any> = {
 			sortKey:"BlogSortKeys"
 		},
 		cart:{
+
+		},
+		cartCompletionAttempt:{
 
 		},
 		collection:{
@@ -526,6 +623,12 @@ export const AllTypesProps: Record<string,any> = {
 		pages:{
 			sortKey:"PageSortKeys"
 		},
+		predictiveSearch:{
+			limitScope:"PredictiveSearchLimitScope",
+			searchableFields:"SearchableField",
+			types:"PredictiveSearchType",
+			unavailableProducts:"SearchUnavailableProductsType"
+		},
 		product:{
 
 		},
@@ -533,7 +636,7 @@ export const AllTypesProps: Record<string,any> = {
 
 		},
 		productRecommendations:{
-
+			intent:"ProductRecommendationIntent"
 		},
 		productTags:{
 
@@ -544,10 +647,22 @@ export const AllTypesProps: Record<string,any> = {
 		products:{
 			sortKey:"ProductSortKeys"
 		},
+		search:{
+			sortKey:"SearchSortKeys",
+			prefix:"SearchPrefixQueryType",
+			productFilters:"ProductFilter",
+			types:"SearchType",
+			unavailableProducts:"SearchUnavailableProductsType"
+		},
 		urlRedirects:{
 
 		}
 	},
+	SearchPrefixQueryType: "enum" as const,
+	SearchSortKeys: "enum" as const,
+	SearchType: "enum" as const,
+	SearchUnavailableProductsType: "enum" as const,
+	SearchableField: "enum" as const,
 	SelectedOptionInput:{
 
 	},
@@ -565,6 +680,10 @@ export const AllTypesProps: Record<string,any> = {
 			identifiers:"HasMetafieldsIdentifier"
 		}
 	},
+	ShopPayWalletContentInput:{
+		billingAddress:"MailingAddressInput"
+	},
+	SubmissionErrorCode: "enum" as const,
 	TokenizedPaymentInputV3:{
 		paymentAmount:"MoneyInput",
 		billingAddress:"MailingAddressInput",
@@ -627,7 +746,8 @@ export const ReturnTypes: Record<string,any> = {
 		publishedAt:"DateTime",
 		seo:"SEO",
 		tags:"String",
-		title:"String"
+		title:"String",
+		trackingParameters:"String"
 	},
 	ArticleAuthor:{
 		bio:"String",
@@ -659,6 +779,28 @@ export const ReturnTypes: Record<string,any> = {
 	AvailableShippingRates:{
 		ready:"Boolean",
 		shippingRates:"ShippingRate"
+	},
+	BaseCartLine:{
+		"...on CartLine": "CartLine",
+		"...on ComponentizableCartLine": "ComponentizableCartLine",
+		attribute:"Attribute",
+		attributes:"Attribute",
+		cost:"CartLineCost",
+		discountAllocations:"CartDiscountAllocation",
+		estimatedCost:"CartLineEstimatedCost",
+		id:"ID",
+		merchandise:"Merchandise",
+		quantity:"Int",
+		sellingPlanAllocation:"SellingPlanAllocation"
+	},
+	BaseCartLineConnection:{
+		edges:"BaseCartLineEdge",
+		nodes:"BaseCartLine",
+		pageInfo:"PageInfo"
+	},
+	BaseCartLineEdge:{
+		cursor:"String",
+		node:"BaseCartLine"
 	},
 	Blog:{
 		articleByHandle:"Article",
@@ -709,7 +851,9 @@ export const ReturnTypes: Record<string,any> = {
 		discountCodes:"CartDiscountCode",
 		estimatedCost:"CartEstimatedCost",
 		id:"ID",
-		lines:"CartLineConnection",
+		lines:"BaseCartLineConnection",
+		metafield:"Metafield",
+		metafields:"Metafield",
 		note:"String",
 		totalQuantity:"Int",
 		updatedAt:"DateTime"
@@ -727,7 +871,8 @@ export const ReturnTypes: Record<string,any> = {
 		customer:"Customer",
 		deliveryAddressPreferences:"DeliveryAddress",
 		email:"String",
-		phone:"String"
+		phone:"String",
+		walletPreferences:"String"
 	},
 	CartBuyerIdentityUpdatePayload:{
 		cart:"Cart",
@@ -736,6 +881,33 @@ export const ReturnTypes: Record<string,any> = {
 	CartCodeDiscountAllocation:{
 		code:"String",
 		discountedAmount:"MoneyV2"
+	},
+	CartCompletionAction:{
+		"...on CompletePaymentChallenge":"CompletePaymentChallenge"
+	},
+	CartCompletionActionRequired:{
+		action:"CartCompletionAction",
+		id:"String"
+	},
+	CartCompletionAttemptResult:{
+		"...on CartCompletionActionRequired":"CartCompletionActionRequired",
+		"...on CartCompletionFailed":"CartCompletionFailed",
+		"...on CartCompletionProcessing":"CartCompletionProcessing",
+		"...on CartCompletionSuccess":"CartCompletionSuccess"
+	},
+	CartCompletionFailed:{
+		errors:"CompletionError",
+		id:"String"
+	},
+	CartCompletionProcessing:{
+		id:"String",
+		pollDelay:"Int"
+	},
+	CartCompletionSuccess:{
+		completedAt:"DateTime",
+		id:"String",
+		orderId:"ID",
+		orderUrl:"URL"
 	},
 	CartCost:{
 		checkoutChargeAmount:"MoneyV2",
@@ -757,7 +929,7 @@ export const ReturnTypes: Record<string,any> = {
 		title:"String"
 	},
 	CartDeliveryGroup:{
-		cartLines:"CartLineConnection",
+		cartLines:"BaseCartLineConnection",
 		deliveryAddress:"MailingAddress",
 		deliveryOptions:"CartDeliveryOption",
 		id:"ID",
@@ -812,20 +984,11 @@ export const ReturnTypes: Record<string,any> = {
 		quantity:"Int",
 		sellingPlanAllocation:"SellingPlanAllocation"
 	},
-	CartLineConnection:{
-		edges:"CartLineEdge",
-		nodes:"CartLine",
-		pageInfo:"PageInfo"
-	},
 	CartLineCost:{
 		amountPerQuantity:"MoneyV2",
 		compareAtAmountPerQuantity:"MoneyV2",
 		subtotalAmount:"MoneyV2",
 		totalAmount:"MoneyV2"
-	},
-	CartLineEdge:{
-		cursor:"String",
-		node:"CartLine"
 	},
 	CartLineEstimatedCost:{
 		amount:"MoneyV2",
@@ -845,13 +1008,35 @@ export const ReturnTypes: Record<string,any> = {
 		cart:"Cart",
 		userErrors:"CartUserError"
 	},
+	CartMetafieldDeletePayload:{
+		deletedId:"ID",
+		userErrors:"MetafieldDeleteUserError"
+	},
+	CartMetafieldsSetPayload:{
+		metafields:"Metafield",
+		userErrors:"MetafieldsSetUserError"
+	},
 	CartNoteUpdatePayload:{
+		cart:"Cart",
+		userErrors:"CartUserError"
+	},
+	CartPaymentUpdatePayload:{
 		cart:"Cart",
 		userErrors:"CartUserError"
 	},
 	CartSelectedDeliveryOptionsUpdatePayload:{
 		cart:"Cart",
 		userErrors:"CartUserError"
+	},
+	CartSubmitForCompletionPayload:{
+		result:"CartSubmitForCompletionResult",
+		userErrors:"CartUserError"
+	},
+	CartSubmitForCompletionResult:{
+		"...on SubmitAlreadyAccepted":"SubmitAlreadyAccepted",
+		"...on SubmitFailed":"SubmitFailed",
+		"...on SubmitSuccess":"SubmitSuccess",
+		"...on SubmitThrottled":"SubmitThrottled"
 	},
 	CartUserError:{
 		code:"CartErrorCode",
@@ -1024,12 +1209,14 @@ export const ReturnTypes: Record<string,any> = {
 		products:"ProductConnection",
 		seo:"SEO",
 		title:"String",
+		trackingParameters:"String",
 		updatedAt:"DateTime"
 	},
 	CollectionConnection:{
 		edges:"CollectionEdge",
 		nodes:"Collection",
-		pageInfo:"PageInfo"
+		pageInfo:"PageInfo",
+		totalCount:"UnsignedInt64"
 	},
 	CollectionEdge:{
 		cursor:"String",
@@ -1055,10 +1242,30 @@ export const ReturnTypes: Record<string,any> = {
 		cursor:"String",
 		node:"Comment"
 	},
+	CompletePaymentChallenge:{
+		redirectUrl:"URL"
+	},
+	CompletionError:{
+		code:"CompletionErrorCode",
+		message:"String"
+	},
+	ComponentizableCartLine:{
+		attribute:"Attribute",
+		attributes:"Attribute",
+		cost:"CartLineCost",
+		discountAllocations:"CartDiscountAllocation",
+		estimatedCost:"CartLineEstimatedCost",
+		id:"ID",
+		lineComponents:"CartLine",
+		merchandise:"Merchandise",
+		quantity:"Int",
+		sellingPlanAllocation:"SellingPlanAllocation"
+	},
 	Country:{
 		availableLanguages:"Language",
 		currency:"Currency",
 		isoCode:"CountryCode",
+		market:"Market",
 		name:"String",
 		unitSystem:"UnitSystem"
 	},
@@ -1221,6 +1428,8 @@ export const ReturnTypes: Record<string,any> = {
 		"...on CartUserError": "CartUserError",
 		"...on CheckoutUserError": "CheckoutUserError",
 		"...on CustomerUserError": "CustomerUserError",
+		"...on MetafieldDeleteUserError": "MetafieldDeleteUserError",
+		"...on MetafieldsSetUserError": "MetafieldsSetUserError",
 		"...on UserError": "UserError",
 		field:"String",
 		message:"String"
@@ -1238,6 +1447,7 @@ export const ReturnTypes: Record<string,any> = {
 		id:"ID",
 		mediaContentType:"MediaContentType",
 		originUrl:"URL",
+		presentation:"MediaPresentation",
 		previewImage:"Image"
 	},
 	Filter:{
@@ -1286,8 +1496,11 @@ export const ReturnTypes: Record<string,any> = {
 	HasMetafields:{
 		"...on Article": "Article",
 		"...on Blog": "Blog",
+		"...on Cart": "Cart",
 		"...on Collection": "Collection",
 		"...on Customer": "Customer",
+		"...on Location": "Location",
+		"...on Market": "Market",
 		"...on Order": "Order",
 		"...on Page": "Page",
 		"...on Product": "Product",
@@ -1315,6 +1528,14 @@ export const ReturnTypes: Record<string,any> = {
 		cursor:"String",
 		node:"Image"
 	},
+	InContextAnnotation:{
+		description:"String",
+		type:"InContextAnnotationType"
+	},
+	InContextAnnotationType:{
+		kind:"String",
+		name:"String"
+	},
 	JSON: `scalar.JSON` as const,
 	Language:{
 		endonymName:"String",
@@ -1325,11 +1546,14 @@ export const ReturnTypes: Record<string,any> = {
 		availableCountries:"Country",
 		availableLanguages:"Language",
 		country:"Country",
-		language:"Language"
+		language:"Language",
+		market:"Market"
 	},
 	Location:{
 		address:"LocationAddress",
 		id:"ID",
+		metafield:"Metafield",
+		metafields:"Metafield",
 		name:"String"
 	},
 	LocationAddress:{
@@ -1393,13 +1617,21 @@ export const ReturnTypes: Record<string,any> = {
 		title:"String",
 		value:"PricingValue"
 	},
+	Market:{
+		handle:"String",
+		id:"ID",
+		metafield:"Metafield",
+		metafields:"Metafield"
+	},
 	Media:{
 		"...on ExternalVideo": "ExternalVideo",
 		"...on MediaImage": "MediaImage",
 		"...on Model3d": "Model3d",
 		"...on Video": "Video",
 		alt:"String",
+		id:"ID",
 		mediaContentType:"MediaContentType",
+		presentation:"MediaPresentation",
 		previewImage:"Image"
 	},
 	MediaConnection:{
@@ -1416,7 +1648,12 @@ export const ReturnTypes: Record<string,any> = {
 		id:"ID",
 		image:"Image",
 		mediaContentType:"MediaContentType",
+		presentation:"MediaPresentation",
 		previewImage:"Image"
+	},
+	MediaPresentation:{
+		asJson:"JSON",
+		id:"ID"
 	},
 	Menu:{
 		handle:"String",
@@ -1428,11 +1665,20 @@ export const ReturnTypes: Record<string,any> = {
 	MenuItem:{
 		id:"ID",
 		items:"MenuItem",
+		resource:"MenuItemResource",
 		resourceId:"ID",
 		tags:"String",
 		title:"String",
 		type:"MenuItemType",
 		url:"URL"
+	},
+	MenuItemResource:{
+		"...on Article":"Article",
+		"...on Blog":"Blog",
+		"...on Collection":"Collection",
+		"...on Page":"Page",
+		"...on Product":"Product",
+		"...on ShopPolicy":"ShopPolicy"
 	},
 	Merchandise:{
 		"...on ProductVariant":"ProductVariant"
@@ -1450,11 +1696,19 @@ export const ReturnTypes: Record<string,any> = {
 		updatedAt:"DateTime",
 		value:"String"
 	},
+	MetafieldDeleteUserError:{
+		code:"MetafieldDeleteErrorCode",
+		field:"String",
+		message:"String"
+	},
 	MetafieldParentResource:{
 		"...on Article":"Article",
 		"...on Blog":"Blog",
+		"...on Cart":"Cart",
 		"...on Collection":"Collection",
 		"...on Customer":"Customer",
+		"...on Location":"Location",
+		"...on Market":"Market",
 		"...on Order":"Order",
 		"...on Page":"Page",
 		"...on Product":"Product",
@@ -1480,11 +1734,19 @@ export const ReturnTypes: Record<string,any> = {
 		cursor:"String",
 		node:"MetafieldReference"
 	},
+	MetafieldsSetUserError:{
+		code:"MetafieldsSetUserErrorCode",
+		elementIndex:"Int",
+		field:"String",
+		message:"String"
+	},
 	Metaobject:{
 		field:"MetaobjectField",
 		fields:"MetaobjectField",
 		handle:"String",
 		id:"ID",
+		onlineStoreUrl:"URL",
+		seo:"MetaobjectSEO",
 		type:"String",
 		updatedAt:"DateTime"
 	},
@@ -1504,10 +1766,15 @@ export const ReturnTypes: Record<string,any> = {
 		type:"String",
 		value:"String"
 	},
+	MetaobjectSEO:{
+		description:"MetaobjectField",
+		title:"MetaobjectField"
+	},
 	Model3d:{
 		alt:"String",
 		id:"ID",
 		mediaContentType:"MediaContentType",
+		presentation:"MediaPresentation",
 		previewImage:"Image",
 		sources:"Model3dSource"
 	},
@@ -1529,8 +1796,12 @@ export const ReturnTypes: Record<string,any> = {
 		cartLinesAdd:"CartLinesAddPayload",
 		cartLinesRemove:"CartLinesRemovePayload",
 		cartLinesUpdate:"CartLinesUpdatePayload",
+		cartMetafieldDelete:"CartMetafieldDeletePayload",
+		cartMetafieldsSet:"CartMetafieldsSetPayload",
 		cartNoteUpdate:"CartNoteUpdatePayload",
+		cartPaymentUpdate:"CartPaymentUpdatePayload",
 		cartSelectedDeliveryOptionsUpdate:"CartSelectedDeliveryOptionsUpdatePayload",
+		cartSubmitForCompletion:"CartSubmitForCompletionPayload",
 		checkoutAttributesUpdateV2:"CheckoutAttributesUpdateV2Payload",
 		checkoutCompleteFree:"CheckoutCompleteFreePayload",
 		checkoutCompleteWithCreditCardV2:"CheckoutCompleteWithCreditCardV2Payload",
@@ -1568,6 +1839,7 @@ export const ReturnTypes: Record<string,any> = {
 	Node:{
 		"...on AppliedGiftCard": "AppliedGiftCard",
 		"...on Article": "Article",
+		"...on BaseCartLine": "BaseCartLine",
 		"...on Blog": "Blog",
 		"...on Cart": "Cart",
 		"...on CartLine": "CartLine",
@@ -1575,11 +1847,14 @@ export const ReturnTypes: Record<string,any> = {
 		"...on CheckoutLineItem": "CheckoutLineItem",
 		"...on Collection": "Collection",
 		"...on Comment": "Comment",
+		"...on ComponentizableCartLine": "ComponentizableCartLine",
 		"...on ExternalVideo": "ExternalVideo",
 		"...on GenericFile": "GenericFile",
 		"...on Location": "Location",
 		"...on MailingAddress": "MailingAddress",
+		"...on Market": "Market",
 		"...on MediaImage": "MediaImage",
+		"...on MediaPresentation": "MediaPresentation",
 		"...on Menu": "Menu",
 		"...on MenuItem": "MenuItem",
 		"...on Metafield": "Metafield",
@@ -1601,11 +1876,13 @@ export const ReturnTypes: Record<string,any> = {
 		"...on Article": "Article",
 		"...on Blog": "Blog",
 		"...on Collection": "Collection",
+		"...on Metaobject": "Metaobject",
 		"...on Page": "Page",
 		"...on Product": "Product",
 		onlineStoreUrl:"URL"
 	},
 	Order:{
+		billingAddress:"MailingAddress",
 		cancelReason:"OrderCancelReason",
 		canceledAt:"DateTime",
 		currencyCode:"CurrencyCode",
@@ -1686,6 +1963,7 @@ export const ReturnTypes: Record<string,any> = {
 		onlineStoreUrl:"URL",
 		seo:"SEO",
 		title:"String",
+		trackingParameters:"String",
 		updatedAt:"DateTime"
 	},
 	PageConnection:{
@@ -1726,6 +2004,13 @@ export const ReturnTypes: Record<string,any> = {
 		shopifyPaymentsAccountId:"String",
 		supportedDigitalWallets:"DigitalWallet"
 	},
+	PredictiveSearchResult:{
+		articles:"Article",
+		collections:"Collection",
+		pages:"Page",
+		products:"Product",
+		queries:"SearchQuerySuggestion"
+	},
 	PricingPercentageValue:{
 		percentage:"Float"
 	},
@@ -1759,6 +2044,7 @@ export const ReturnTypes: Record<string,any> = {
 		tags:"String",
 		title:"String",
 		totalInventory:"Int",
+		trackingParameters:"String",
 		updatedAt:"DateTime",
 		variantBySelectedOptions:"ProductVariant",
 		variants:"ProductVariantConnection",
@@ -1818,11 +2104,13 @@ export const ReturnTypes: Record<string,any> = {
 		node:"ProductVariant"
 	},
 	QueryRoot:{
+		article:"Article",
 		articles:"ArticleConnection",
 		blog:"Blog",
 		blogByHandle:"Blog",
 		blogs:"BlogConnection",
 		cart:"Cart",
+		cartCompletionAttempt:"CartCompletionAttemptResult",
 		collection:"Collection",
 		collectionByHandle:"Collection",
 		collections:"CollectionConnection",
@@ -1837,6 +2125,7 @@ export const ReturnTypes: Record<string,any> = {
 		page:"Page",
 		pageByHandle:"Page",
 		pages:"PageConnection",
+		predictiveSearch:"PredictiveSearchResult",
 		product:"Product",
 		productByHandle:"Product",
 		productRecommendations:"Product",
@@ -1844,6 +2133,7 @@ export const ReturnTypes: Record<string,any> = {
 		productTypes:"StringConnection",
 		products:"ProductConnection",
 		publicApiVersions:"ApiVersion",
+		search:"SearchResultItemConnection",
 		shop:"Shop",
 		urlRedirects:"UrlRedirectConnection"
 	},
@@ -1857,6 +2147,27 @@ export const ReturnTypes: Record<string,any> = {
 		targetType:"DiscountApplicationTargetType",
 		title:"String",
 		value:"PricingValue"
+	},
+	SearchQuerySuggestion:{
+		styledText:"String",
+		text:"String",
+		trackingParameters:"String"
+	},
+	SearchResultItem:{
+		"...on Article":"Article",
+		"...on Page":"Page",
+		"...on Product":"Product"
+	},
+	SearchResultItemConnection:{
+		edges:"SearchResultItemEdge",
+		nodes:"SearchResultItem",
+		pageInfo:"PageInfo",
+		productFilters:"Filter",
+		totalCount:"Int"
+	},
+	SearchResultItemEdge:{
+		cursor:"String",
+		node:"SearchResultItem"
 	},
 	SelectedOption:{
 		name:"String",
@@ -1993,7 +2304,8 @@ export const ReturnTypes: Record<string,any> = {
 	StoreAvailability:{
 		available:"Boolean",
 		location:"Location",
-		pickUpTime:"String"
+		pickUpTime:"String",
+		quantityAvailable:"Int"
 	},
 	StoreAvailabilityConnection:{
 		edges:"StoreAvailabilityEdge",
@@ -2011,6 +2323,31 @@ export const ReturnTypes: Record<string,any> = {
 	StringEdge:{
 		cursor:"String",
 		node:"String"
+	},
+	SubmissionError:{
+		code:"SubmissionErrorCode",
+		message:"String"
+	},
+	SubmitAlreadyAccepted:{
+		attemptId:"String"
+	},
+	SubmitFailed:{
+		checkoutUrl:"URL",
+		errors:"SubmissionError"
+	},
+	SubmitSuccess:{
+		attemptId:"String"
+	},
+	SubmitThrottled:{
+		pollAfter:"DateTime"
+	},
+	Trackable:{
+		"...on Article": "Article",
+		"...on Collection": "Collection",
+		"...on Page": "Page",
+		"...on Product": "Product",
+		"...on SearchQuerySuggestion": "SearchQuerySuggestion",
+		trackingParameters:"String"
 	},
 	Transaction:{
 		amount:"MoneyV2",
@@ -2051,6 +2388,7 @@ export const ReturnTypes: Record<string,any> = {
 		alt:"String",
 		id:"ID",
 		mediaContentType:"MediaContentType",
+		presentation:"MediaPresentation",
 		previewImage:"Image",
 		sources:"VideoSource"
 	},
@@ -2064,6 +2402,6 @@ export const ReturnTypes: Record<string,any> = {
 }
 
 export const Ops = {
-mutation: "Mutation" as const,
-	query: "QueryRoot" as const
+query: "QueryRoot" as const,
+	mutation: "Mutation" as const
 }

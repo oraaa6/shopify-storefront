@@ -40,7 +40,7 @@
     "eslint-config-next": "^13.2.1",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-tailwindcss": "^3.9.0",
-    "graphql-zeus": "^5.2.8",
+    "graphql-zeus": "^5.2.2",
     "lodash": "^4.17.21",
     "next-seo": "^6.0.0",
     "nextjs-progressbar": "^0.0.16",

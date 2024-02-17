@@ -93,7 +93,7 @@ export function ProductSingleSection(props: DataProps<typeof fetchProductSingleS
       <section>
         <div className="flex flex-col rounded-lg shadow-sm md:flex-row md:space-x-8">
           <div className="md:basis-6/12 ">
-            <div className="h-full w-full overflow-hidden rounded-lg bg-gray-200">
+            <div className="size-full overflow-hidden rounded-lg bg-gray-200">
               <NextImage
                 src={props.data.images.nodes[0].url}
                 alt={props.data.images.nodes[0].altText || ''}
