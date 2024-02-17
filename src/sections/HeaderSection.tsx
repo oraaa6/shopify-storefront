@@ -16,6 +16,10 @@ const mainMenuItems: { text: string; href: string }[] = [
     text: 'Bracelets',
     href: '/bracelets',
   },
+  {
+    text: 'Earrings',
+    href: '/earrings',
+  },
 ];
 
 export function HeaderSection() {
