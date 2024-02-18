@@ -14,7 +14,7 @@ export function Select({ onChange, options, label }: SelectProps<Option>) {
   const [selected, setSelected] = useState(options[0]);
 
   const onHandleChange = (value: Option) => {
-    if(value.name === selected.name) {
+    if (value.name === selected.name) {
       return null;
     }
 
@@ -23,14 +23,14 @@ export function Select({ onChange, options, label }: SelectProps<Option>) {
   };
 
   return (
-    <div className="w-48">
+    <div className="w-full sm:w-[200px] lg:w-full">
       <Listbox value={selected} onChange={onHandleChange}>
-      {label && <Listbox.Label>{label}</Listbox.Label>}
+        {label && <Listbox.Label>{label}</Listbox.Label>}
         <div className="relative mt-1">
           <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
             <span className="block truncate">{selected.name}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <ChevronUpDownIcon className="size-5 text-gray-400" aria-hidden="true" />
+              <ChevronUpDownIcon className="h-5 text-gray-400" aria-hidden="true" />
             </span>
           </Listbox.Button>
           <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
@@ -48,7 +48,7 @@ export function Select({ onChange, options, label }: SelectProps<Option>) {
                       <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>{item.name}</span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-600">
-                          <CheckIcon className="size-5" aria-hidden="true" />
+                          <CheckIcon className="h-5" aria-hidden="true" />
                         </span>
                       ) : null}
                     </>

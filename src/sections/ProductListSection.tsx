@@ -5,17 +5,18 @@ import { Money } from '@shopify/hydrogen-react';
 import { Select, Option } from '@site/snippets/Select';
 import { fetchProductByPrice } from '@site/utilities/fetchProductsFunctions/fetchProductsFunctions';
 import { SearchInput } from '@site/snippets/SearchInput';
+import { useDebounce } from '@site/hooks/use-debounce';
 
 enum SortKey {
   ALL = 'All',
   LOW_TO_HIGH = 'Lowest price',
-  HIGH_TO_LOW = 'Highest price'
+  HIGH_TO_LOW = 'Highest price',
 }
 
-export async function fetchProductListSection(cursor?: string) {
+export async function fetchProductListSection(cursor?: string, query?: string) {
   const { products } = await storefront.query({
     products: [
-      { first: 12, after: cursor || null },
+      { first: 12, after: cursor || null, query: query ? `title:${query}*` : undefined },
       {
         pageInfo: {
           hasNextPage: true,
@@ -48,65 +49,82 @@ export async function fetchProductListSection(cursor?: string) {
 
 export function ProductListSection(props: DataProps<typeof fetchProductListSection>) {
   const [pages, setPages] = useState([props.data]);
-  const [sortKey, setSortKey] = useState<SortKey>(SortKey.ALL)
+  const [sortKey, setSortKey] = useState<SortKey>(SortKey.ALL);
+  const [searchPhrase, setSearchPhrase] = useState('');
   const lastPage = pages[pages.length - 1];
-  const lastCursor = lastPage.edges[lastPage.edges.length - 1].cursor;
+  const lastCursor = lastPage?.edges[lastPage.edges.length - 1]?.cursor;
   const hasNextPage = lastPage.pageInfo.hasNextPage;
-  const sortOptions = (Object.keys(SortKey) as Array<keyof typeof SortKey>).map((key) => ({name: SortKey[key]}))
+  const sortOptions = (Object.keys(SortKey) as Array<keyof typeof SortKey>).map((key) => ({ name: SortKey[key] }));
 
-  const [loader, load] = useAsyncFn(async () => {
+  const fetchSortedProductsWithQuery = async (lastCursor?: string) => {
     let productList;
-    switch(sortKey) {
+    switch (sortKey) {
       case SortKey.ALL:
-        productList = await fetchProductListSection(lastCursor);
+        productList = await fetchProductListSection(lastCursor, searchPhrase);
         break;
       case SortKey.LOW_TO_HIGH:
-        productList = await fetchProductByPrice(lastCursor);
+        productList = await fetchProductByPrice(lastCursor, false, searchPhrase);
         break;
       case SortKey.HIGH_TO_LOW:
-        productList = await fetchProductByPrice(lastCursor, true);
+        productList = await fetchProductByPrice(lastCursor, true, searchPhrase);
         break;
       default:
-        productList = await fetchProductListSection()
+        productList = await fetchProductListSection(lastCursor, searchPhrase);
     }
-   setPages([...pages, productList]);
+      return productList
+  }
+
+  const [loader, load] = useAsyncFn(async () => {
+  const newProductList = await fetchSortedProductsWithQuery(lastCursor);
+  setPages([...pages, newProductList]);
   }, [lastCursor]);
 
-  
   const sortProduct = async (value: Option) => {
     let productList;
-    switch(value.name) {
+    setSearchPhrase('')
+
+    switch (value.name) {
       case SortKey.ALL:
-        setSortKey(SortKey.ALL)
+        setSortKey(SortKey.ALL);
         productList = await fetchProductListSection();
         break;
       case SortKey.LOW_TO_HIGH:
-        setSortKey(SortKey.LOW_TO_HIGH)
+        setSortKey(SortKey.LOW_TO_HIGH);
         productList = await fetchProductByPrice();
         break;
       case SortKey.HIGH_TO_LOW:
-        setSortKey(SortKey.HIGH_TO_LOW)
+        setSortKey(SortKey.HIGH_TO_LOW);
         productList = await fetchProductByPrice(undefined, true);
         break;
       default:
-        productList = await fetchProductListSection()
+        productList = await fetchProductListSection();
     }
-    setPages([productList]);
-  }
 
+    setPages([productList]);
+  };
+
+  useDebounce(async () => {
+    const newProductList = await fetchSortedProductsWithQuery();
+    setPages([newProductList]);
+  }, [searchPhrase], 500)
+
+ 
   return (
     <section>
-      <div className='flex flex-col items-center justify-center gap-5 lg:flex-row lg:items-start'>
-        <div className='flex max-w-[250px] flex-row gap-5 lg:flex-col'>
-        <Select onChange={sortProduct} options={sortOptions} label="Sort by:"/>
-        <SearchInput name="search" label='Search Products'/>
+      <div className="flex flex-col items-center justify-center gap-5 lg:flex-row lg:items-start">
+        <div className="flex w-full flex-col justify-center gap-5 sm:flex-row lg:max-w-[250px] lg:flex-col">
+          <Select onChange={sortProduct} options={sortOptions} label="Sort by:" />
+          <SearchInput
+            name="search"
+            label="Search products:"
+            onChange={(event) => setSearchPhrase(event.target.value)}
+            value={searchPhrase}
+          />
         </div>
-  
-      <div className='flex justify-center'>
-        <h2 className="sr-only">Products</h2>
-        <div className="m-auto mb-10 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
-      
-        {pages
+        <div className="flex w-full justify-center">
+          <h2 className="sr-only">Products</h2>
+          <div className="m-auto mb-10 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
+          {pages
           .flatMap(({ edges }) => edges)
           .map(({ node }) => (
             <NextLink key={node.handle} href={`/products/${node.handle}`} className="group">
@@ -124,8 +142,9 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
               </div>
             </NextLink>
           ))}
+          {!pages[0].edges.length && <div className='col-span-full w-full py-5'><p className='text-base'>Product not found</p></div>}
           </div>
-      </div>
+        </div>
       </div>
       {hasNextPage && (
         <div className="text-center">
