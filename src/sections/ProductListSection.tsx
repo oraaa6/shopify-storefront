@@ -3,7 +3,7 @@ import { NextImage, NextLink, useState, useAsyncFn, DataProps } from '@site/util
 import { Button } from '@site/snippets';
 import { Money } from '@shopify/hydrogen-react';
 import { Select, Option } from '@site/snippets/Select';
-import { fetchProductByPrice } from '@site/utilities/fetchProductsFunctions/fetchProductsFunctions';
+import { fetchProductByPrice } from '@site/utilities/fetchDataFunctions/fetchDataFunctions';
 import { SearchInput } from '@site/snippets/SearchInput';
 import { useDebounce } from '@site/hooks/use-debounce';
 

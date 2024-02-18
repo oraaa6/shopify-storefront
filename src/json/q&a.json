@@ -1,0 +1,38 @@
+[
+  {
+    "question": "What are the store opening hours?",
+    "answer": "Our store is open Monday to Saturday from 9:00 AM to 8:00 PM and on Sundays from 10:00 AM to 6:00 PM"
+  },
+  {
+    "question": "Do you offer free delivery?",
+    "answer": "Yes, we provide free delivery for orders over 100 PLN"
+  },
+  {
+    "question": "How can I return purchased items?",
+    "answer": "To return purchased items, please contact our customer service department within 14 days of purchase date. We offer refunds or product exchanges"
+  },
+  {
+    "question": "Do you accept credit card payments?",
+    "answer": "Yes, we accept Visa, MasterCard, and American Express credit card payments"
+  },
+  {
+    "question": "Do you offer a loyalty program for regular customers?",
+    "answer": "Yes, we have a loyalty program that rewards our regular customers with special discounts and promotions."
+  },
+  {
+    "question": "Can I make reservations for products online",
+    "answer": "Unfortunately, we do not currently offer the option to reserve products online. Products are available for purchase in-store only"
+  },
+  {
+    "question": "Do you offer international delivery?",
+    "answer": "We currently do not offer international delivery. Our services are available only within the country."
+  },
+  {
+    "question": "How long does online order processing take?",
+    "answer": "Online orders are typically processed within 1-2 business days from the order placement date."
+  },
+  {
+    "question": "Do you offer warranties on purchased products?",
+    "answer": "Yes, most of our products come with a manufacturers warranty. Detailed warranty information can be found on the product page or you can contact our customer service department"
+  }
+]

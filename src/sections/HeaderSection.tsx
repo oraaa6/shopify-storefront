@@ -23,6 +23,10 @@ const mainMenuItems: { text: string; href: string }[] = [
   {
     text: 'Necklaces',
     href: '/necklaces',
+  },
+  {
+    text: 'Privacy Policy',
+    href: '/privacy-policy',
   }
 ];
 

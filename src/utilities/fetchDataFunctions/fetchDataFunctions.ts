@@ -38,3 +38,15 @@ export const fetchProductByPrice = async (cursor?: string, reverse?: boolean, qu
   });
   return products;
 };
+
+export const fetchPrivacyPolicy = async () => {
+  const { shop } = await storefront.query({
+    shop: {
+      privacyPolicy: {
+        title: true,
+        body: true,
+      },
+    },
+  });
+  return shop.privacyPolicy;
+};
