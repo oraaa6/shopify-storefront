@@ -71,17 +71,17 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
       default:
         productList = await fetchProductListSection(lastCursor, searchPhrase);
     }
-      return productList
-  }
+    return productList;
+  };
 
   const [loader, load] = useAsyncFn(async () => {
-  const newProductList = await fetchSortedProductsWithQuery(lastCursor);
-  setPages([...pages, newProductList]);
+    const newProductList = await fetchSortedProductsWithQuery(lastCursor);
+    setPages([...pages, newProductList]);
   }, [lastCursor]);
 
   const sortProduct = async (value: Option) => {
     let productList;
-    setSearchPhrase('')
+    setSearchPhrase('');
 
     switch (value.name) {
       case SortKey.ALL:
@@ -103,12 +103,15 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
     setPages([productList]);
   };
 
-  useDebounce(async () => {
-    const newProductList = await fetchSortedProductsWithQuery();
-    setPages([newProductList]);
-  }, [searchPhrase], 500)
+  useDebounce(
+    async () => {
+      const newProductList = await fetchSortedProductsWithQuery();
+      setPages([newProductList]);
+    },
+    [searchPhrase],
+    500
+  );
 
- 
   return (
     <section>
       <div className="flex flex-col items-center justify-center gap-5 lg:flex-row lg:items-start">
@@ -121,28 +124,32 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
             value={searchPhrase}
           />
         </div>
-        <div className="flex w-full justify-center">
+        <div className="flex justify-center">
           <h2 className="sr-only">Products</h2>
           <div className="m-auto mb-10 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
-          {pages
-          .flatMap(({ edges }) => edges)
-          .map(({ node }) => (
-            <NextLink key={node.handle} href={`/products/${node.handle}`} className="group">
-              <div className="relative h-[240px] w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 md:w-[300px]">
-                <NextImage
-                  src={node.featuredImage!.url}
-                  alt={node.featuredImage!.altText || ''}
-                  fill
-                  className="!relative max-h-full max-w-full object-cover object-center group-hover:opacity-75"
-                />
+            {pages
+              .flatMap(({ edges }) => edges)
+              .map(({ node }) => (
+                <NextLink key={node.handle} href={`/products/${node.handle}`} className="group">
+                  <div className="relative h-[240px] w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 md:w-[300px]">
+                    <NextImage
+                      src={node.featuredImage!.url}
+                      alt={node.featuredImage!.altText || ''}
+                      fill
+                      className="!relative max-h-full max-w-full object-cover object-center group-hover:opacity-75"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-sm text-gray-700">{node.title}</h3>
+                  <div className="mt-1 text-lg font-medium text-gray-900">
+                    <Money data={node.priceRange.minVariantPrice}></Money>
+                  </div>
+                </NextLink>
+              ))}
+            {!pages[0].edges.length && (
+              <div className="col-span-full w-full py-5">
+                <p className="text-base">Product not found</p>
               </div>
-              <h3 className="mt-4 text-sm text-gray-700">{node.title}</h3>
-              <div className="mt-1 text-lg font-medium text-gray-900">
-                <Money data={node.priceRange.minVariantPrice}></Money>
-              </div>
-            </NextLink>
-          ))}
-          {!pages[0].edges.length && <div className='col-span-full w-full py-5'><p className='text-base'>Product not found</p></div>}
+            )}
           </div>
         </div>
       </div>

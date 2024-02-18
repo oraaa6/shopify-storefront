@@ -5,7 +5,7 @@ import { Bars3Icon, XMarkIcon, ShoppingBagIcon, ShoppingCartIcon } from '@heroic
 
 const mainMenuItems: { text: string; href: string }[] = [
   {
-    text: 'Products',
+    text: 'All',
     href: '/products',
   },
   {
@@ -27,7 +27,7 @@ const mainMenuItems: { text: string; href: string }[] = [
   {
     text: 'Privacy Policy',
     href: '/privacy-policy',
-  }
+  },
 ];
 
 export function HeaderSection() {

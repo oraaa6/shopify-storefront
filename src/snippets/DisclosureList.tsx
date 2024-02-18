@@ -11,7 +11,6 @@ type DisclosureListProps = {
 };
 
 export default function DisclosureList({ data }: DisclosureListProps) {
-  console.log(data);
   return (
     <div className="w-full px-4 pt-16">
       <div className="mx-auto w-full rounded-2xl bg-white p-2">
