@@ -1,11 +1,16 @@
 import { storefront, ProductSortKeys } from '../storefront';
 
-export const fetchProductByPrice = async (cursor?: string, reverse?: boolean, query?: string) => {
+export const fetchProductByKey = async (
+  sortKey: ProductSortKeys,
+  cursor?: string,
+  reverse?: boolean,
+  query?: string
+) => {
   const { products } = await storefront.query({
     products: [
       {
         first: 12,
-        sortKey: ProductSortKeys.PRICE,
+        sortKey,
         after: cursor || null,
         reverse,
         query: query ? `title:${query}*` : undefined,

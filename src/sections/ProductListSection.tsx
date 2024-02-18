@@ -1,9 +1,9 @@
-import { storefront } from '@site/utilities/storefront';
+import { ProductSortKeys, storefront } from '@site/utilities/storefront';
 import { NextImage, NextLink, useState, useAsyncFn, DataProps } from '@site/utilities/deps';
 import { Button } from '@site/snippets';
 import { Money } from '@shopify/hydrogen-react';
 import { Select, Option } from '@site/snippets/Select';
-import { fetchProductByPrice } from '@site/utilities/fetchDataFunctions/fetchDataFunctions';
+import { fetchProductByKey } from '@site/utilities/fetchDataFunctions/fetchDataFunctions';
 import { SearchInput } from '@site/snippets/SearchInput';
 import { useDebounce } from '@site/hooks/use-debounce';
 
@@ -11,6 +11,7 @@ enum SortKey {
   ALL = 'All',
   LOW_TO_HIGH = 'Lowest price',
   HIGH_TO_LOW = 'Highest price',
+  LATEST = 'Latest',
 }
 
 export async function fetchProductListSection(cursor?: string, query?: string) {
@@ -63,10 +64,13 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
         productList = await fetchProductListSection(lastCursor, searchPhrase);
         break;
       case SortKey.LOW_TO_HIGH:
-        productList = await fetchProductByPrice(lastCursor, false, searchPhrase);
+        productList = await fetchProductByKey(ProductSortKeys.PRICE, lastCursor, false, searchPhrase);
         break;
       case SortKey.HIGH_TO_LOW:
-        productList = await fetchProductByPrice(lastCursor, true, searchPhrase);
+        productList = await fetchProductByKey(ProductSortKeys.PRICE, lastCursor, true, searchPhrase);
+        break;
+      case SortKey.LATEST:
+        productList = await fetchProductByKey(ProductSortKeys.CREATED_AT, lastCursor, true, searchPhrase);
         break;
       default:
         productList = await fetchProductListSection(lastCursor, searchPhrase);
@@ -90,11 +94,15 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
         break;
       case SortKey.LOW_TO_HIGH:
         setSortKey(SortKey.LOW_TO_HIGH);
-        productList = await fetchProductByPrice();
+        productList = await fetchProductByKey(ProductSortKeys.PRICE);
         break;
       case SortKey.HIGH_TO_LOW:
         setSortKey(SortKey.HIGH_TO_LOW);
-        productList = await fetchProductByPrice(undefined, true);
+        productList = await fetchProductByKey(ProductSortKeys.PRICE, undefined, true);
+        break;
+      case SortKey.LATEST:
+        setSortKey(SortKey.LATEST);
+        productList = await fetchProductByKey(ProductSortKeys.CREATED_AT, undefined, true);
         break;
       default:
         productList = await fetchProductListSection();
@@ -124,7 +132,7 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
             value={searchPhrase}
           />
         </div>
-        <div className="flex justify-center">
+        <div className="flex flex-1 justify-center">
           <h2 className="sr-only">Products</h2>
           <div className="m-auto mb-10 grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
             {pages
@@ -146,7 +154,7 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
                 </NextLink>
               ))}
             {!pages[0].edges.length && (
-              <div className="col-span-full w-full py-5">
+              <div className="w-full py-5">
                 <p className="text-base">Product not found</p>
               </div>
             )}
