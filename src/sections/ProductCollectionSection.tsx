@@ -67,7 +67,7 @@ export function ProductListCollectionSection({data, handle}: ProductListCollecti
 
   return (
     <section>
-      <div className='flex flex-col gap-10 p-10 md:flex-row md:gap-20'>
+      <div className='flex flex-col gap-10 pb-4 sm:p-10 md:flex-row md:gap-20'>
       <h2 className='text-center text-4xl font-bold'>{data.title}</h2>
       <p className='text-center'>{data.description}</p> 
       </div>
@@ -76,12 +76,12 @@ export function ProductListCollectionSection({data, handle}: ProductListCollecti
           .flatMap(({ edges }) => edges)
           .map(({ node }) => ( 
             <NextLink key={node.handle} href={`/products/${node.handle}`} className="group m-auto">
-              <div className="relative h-[240px] w-[300px] overflow-hidden rounded-lg bg-gray-200">
+               <div className="relative h-[240px] w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 md:w-[300px]">
                 <NextImage
                   src={node.featuredImage!.url}
                   alt={node.featuredImage!.altText || ''}
                   fill
-                  className="relative size-full object-cover object-center group-hover:opacity-75"
+                  className="!relative max-h-full max-w-full object-cover object-center group-hover:opacity-75"
                 />
               </div>
               <h3 className="mt-4 text-sm text-gray-700">{node.title}</h3>

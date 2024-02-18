@@ -128,12 +128,12 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
           .flatMap(({ edges }) => edges)
           .map(({ node }) => (
             <NextLink key={node.handle} href={`/products/${node.handle}`} className="group">
-              <div className="relative h-[240px] w-[300px] overflow-hidden rounded-lg bg-gray-200">
+              <div className="relative h-[240px] w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 md:w-[300px]">
                 <NextImage
                   src={node.featuredImage!.url}
                   alt={node.featuredImage!.altText || ''}
                   fill
-                  className="relative size-full object-cover object-center group-hover:opacity-75"
+                  className="!relative max-h-full max-w-full object-cover object-center group-hover:opacity-75"
                 />
               </div>
               <h3 className="mt-4 text-sm text-gray-700">{node.title}</h3>
