@@ -1,54 +1,15 @@
-import { storefront } from '@site/utilities/storefront';
-import { NextImage, NextLink, useState, useAsyncFn, DataProps, invariant } from '@site/utilities/deps';
+import { NextImage, NextLink, useState, useAsyncFn, DataProps } from '@site/utilities/deps';
 import { Button } from '@site/snippets';
 import { Money } from '@shopify/hydrogen-react';
+import { fetchCollection } from '@site/utilities/fetch-data-functions/collections';
 
-export async function fetchProductCollectionSection(handle: string, cursor?: string) {
-  const { collectionByHandle } = await storefront.query({
-    collectionByHandle: [
-      { handle },
-      {
-        title: true,
-        description: [{ truncateAt: 1000 }, true],
-        products: [
-          { first: 12, after: cursor || null },
-          {
-            pageInfo: {
-              hasNextPage: true,
-            },
-            edges: {
-              cursor: true,
-              node: {
-                id: true,
-                handle: true,
-                title: true,
-                priceRange: {
-                  minVariantPrice: {
-                    amount: true,
-                    currencyCode: true,
-                  },
-                },
-                featuredImage: {
-                  url: [{ transform: { maxWidth: 500 } }, true],
-                  altText: true,
-                  width: true,
-                  height: true,
-                },
-              },
-            },
-          },
-        ],
-      },
-    ],
-  });
-
-  invariant(collectionByHandle, `Product not found: ${handle}`);
-
-  return collectionByHandle;
+export async function getCollectionSection(handle: string, cursor?: string) {
+  const products = await fetchCollection(handle, cursor);
+  return products;
 }
 
 type ProductListCollectionSectionProps = {
-  data: DataProps<typeof fetchProductCollectionSection>['data'];
+  data: DataProps<typeof fetchCollection>['data'];
   handle: string;
 };
 
@@ -59,7 +20,7 @@ export function ProductListCollectionSection({ data, handle }: ProductListCollec
   const hasNextPage = lastPage.pageInfo.hasNextPage;
 
   const [loader, load] = useAsyncFn(async () => {
-    const productList = await fetchProductCollectionSection(handle, lastCursor);
+    const productList = await fetchCollection(handle, lastCursor);
     setPages([...pages, productList.products]);
   }, [lastCursor]);
 
@@ -73,7 +34,7 @@ export function ProductListCollectionSection({ data, handle }: ProductListCollec
         {pages
           .flatMap(({ edges }) => edges)
           .map(({ node }) => (
-            <NextLink key={node.handle} href={`/products/${node.handle}`} className="group m-auto">
+            <NextLink key={node.handle} href={`/products/${node.handle}`} className="group m-auto w-full">
               <div className="relative h-[240px] w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 md:w-[300px]">
                 <NextImage
                   src={node.featuredImage!.url}

@@ -1,11 +1,9 @@
-import { PageProps, NextSeo,  fetchStaticProps} from '@site/utilities/deps';
+import { PageProps, NextSeo, fetchStaticProps } from '@site/utilities/deps';
 import { StoreLayout } from '@site/layouts/StoreLayout';
-import { fetchPrivacyPolicy } from '@site/utilities/fetchDataFunctions/fetchDataFunctions';
 import { PrivacyPolicySection } from '@site/sections/PrivacyPolicySection';
-
+import { fetchPrivacyPolicy } from '@site/utilities/fetch-data-functions/shop';
 
 export const getStaticProps = fetchStaticProps(async () => {
-
   return {
     props: {
       data: {
@@ -17,12 +15,12 @@ export const getStaticProps = fetchStaticProps(async () => {
 });
 
 export default function Page(props: PageProps<typeof getStaticProps>) {
-  const { body = '', title = '' } = props.data.shopPrivacyPolicy || {}
+  const { body = '', title = '' } = props.data.shopPrivacyPolicy || {};
 
   return (
     <StoreLayout>
       <NextSeo title={title} description={`${title} from Next Shopify Storefront`} />
-      <PrivacyPolicySection privacyPolicyBody={body} title={title}/>
+      <PrivacyPolicySection privacyPolicyBody={body} title={title} />
     </StoreLayout>
   );
 }

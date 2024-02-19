@@ -17,7 +17,7 @@ export function FooterSection() {
         </NextLink>
         <div className="text-center">
           <p className="text-base font-semibold">Best Shop Ever</p>
-          <p className="text-sm">ul. Wiejska 11, 02-123 Warszawa</p>
+          <p className="text-sm">ul. Wiejska 11, 02-123 Warsaw</p>
           <a href="tel:+48123123123">tel. 123-123-123</a>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { invariant, fetchStaticProps, fetchStaticPaths, PageProps, NextSeo } from '@site/utilities/deps';
 import { StoreLayout } from '@site/layouts/StoreLayout';
-import { ProductSingleSection, fetchProductSingleSection } from '@site/sections/ProuctSingleSection';
+import { ProductSingleSection } from '@site/sections/ProuctSingleSection';
+import { fetchSingleProduct } from '@site/utilities/fetch-data-functions/products';
 
 export const getStaticPaths = fetchStaticPaths(async () => {
   return {
@@ -15,7 +16,7 @@ export const getStaticProps = fetchStaticProps(async ({ params }) => {
   return {
     props: {
       data: {
-        productSingleSection: await fetchProductSingleSection(params?.handle),
+        productSingleSection: await fetchSingleProduct(params?.handle),
       },
     },
     revalidate: 60,

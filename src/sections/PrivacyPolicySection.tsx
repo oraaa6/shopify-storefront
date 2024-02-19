@@ -5,6 +5,7 @@ type PrivacyPolicySectionProps = {
   privacyPolicyBody: string;
   title: string;
 };
+
 export function PrivacyPolicySection({ privacyPolicyBody, title }: PrivacyPolicySectionProps) {
   return (
     <div>

@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import clsx from 'clsx';
 
 export type Option = Record<'name', string>;
 
@@ -45,7 +46,9 @@ export function Select({ onChange, options, label }: SelectProps<Option>) {
                 >
                   {({ selected }) => (
                     <>
-                      <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>{item.name}</span>
+                      <span className={clsx('block truncate', selected ? 'font-medium' : 'font-normal')}>
+                        {item.name}
+                      </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-600">
                           <CheckIcon className="h-5" aria-hidden="true" />

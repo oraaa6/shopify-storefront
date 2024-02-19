@@ -1,11 +1,11 @@
-import { ProductSortKeys, storefront } from '@site/utilities/storefront';
+import { ProductSortKeys } from '@site/utilities/storefront';
 import { NextImage, NextLink, useState, useAsyncFn, DataProps } from '@site/utilities/deps';
 import { Button } from '@site/snippets';
 import { Money } from '@shopify/hydrogen-react';
 import { Select, Option } from '@site/snippets/Select';
-import { fetchProductByKey } from '@site/utilities/fetchDataFunctions/fetchDataFunctions';
 import { SearchInput } from '@site/snippets/SearchInput';
 import { useDebounce } from '@site/hooks/use-debounce';
+import { fetchProductList, fetchProductsByKey } from '@site/utilities/fetch-data-functions/products';
 
 enum SortKey {
   ALL = 'All',
@@ -14,41 +14,12 @@ enum SortKey {
   LATEST = 'Latest',
 }
 
-export async function fetchProductListSection(cursor?: string, query?: string) {
-  const { products } = await storefront.query({
-    products: [
-      { first: 12, after: cursor || null, query: query ? `title:${query}*` : undefined },
-      {
-        pageInfo: {
-          hasNextPage: true,
-        },
-        edges: {
-          cursor: true,
-          node: {
-            handle: true,
-            title: true,
-            priceRange: {
-              minVariantPrice: {
-                amount: true,
-                currencyCode: true,
-              },
-            },
-            featuredImage: {
-              url: [{ transform: { maxWidth: 500 } }, true],
-              altText: true,
-              width: true,
-              height: true,
-            },
-          },
-        },
-      },
-    ],
-  });
-
+export async function getProductListSection(cursor?: string, query?: string) {
+  const products = await fetchProductList(cursor, query);
   return products;
 }
 
-export function ProductListSection(props: DataProps<typeof fetchProductListSection>) {
+export function ProductListSection(props: DataProps<typeof fetchProductList>) {
   const [pages, setPages] = useState([props.data]);
   const [sortKey, setSortKey] = useState<SortKey>(SortKey.ALL);
   const [searchPhrase, setSearchPhrase] = useState('');
@@ -61,19 +32,19 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
     let productList;
     switch (sortKey) {
       case SortKey.ALL:
-        productList = await fetchProductListSection(lastCursor, searchPhrase);
+        productList = await fetchProductList(lastCursor, searchPhrase);
         break;
       case SortKey.LOW_TO_HIGH:
-        productList = await fetchProductByKey(ProductSortKeys.PRICE, lastCursor, false, searchPhrase);
+        productList = await fetchProductsByKey(ProductSortKeys.PRICE, lastCursor, false, searchPhrase);
         break;
       case SortKey.HIGH_TO_LOW:
-        productList = await fetchProductByKey(ProductSortKeys.PRICE, lastCursor, true, searchPhrase);
+        productList = await fetchProductsByKey(ProductSortKeys.PRICE, lastCursor, true, searchPhrase);
         break;
       case SortKey.LATEST:
-        productList = await fetchProductByKey(ProductSortKeys.CREATED_AT, lastCursor, true, searchPhrase);
+        productList = await fetchProductsByKey(ProductSortKeys.CREATED_AT, lastCursor, true, searchPhrase);
         break;
       default:
-        productList = await fetchProductListSection(lastCursor, searchPhrase);
+        productList = await fetchProductList(lastCursor, searchPhrase);
     }
     return productList;
   };
@@ -90,22 +61,22 @@ export function ProductListSection(props: DataProps<typeof fetchProductListSecti
     switch (value.name) {
       case SortKey.ALL:
         setSortKey(SortKey.ALL);
-        productList = await fetchProductListSection();
+        productList = await fetchProductList();
         break;
       case SortKey.LOW_TO_HIGH:
         setSortKey(SortKey.LOW_TO_HIGH);
-        productList = await fetchProductByKey(ProductSortKeys.PRICE);
+        productList = await fetchProductsByKey(ProductSortKeys.PRICE);
         break;
       case SortKey.HIGH_TO_LOW:
         setSortKey(SortKey.HIGH_TO_LOW);
-        productList = await fetchProductByKey(ProductSortKeys.PRICE, undefined, true);
+        productList = await fetchProductsByKey(ProductSortKeys.PRICE, undefined, true);
         break;
       case SortKey.LATEST:
         setSortKey(SortKey.LATEST);
-        productList = await fetchProductByKey(ProductSortKeys.CREATED_AT, undefined, true);
+        productList = await fetchProductsByKey(ProductSortKeys.CREATED_AT, undefined, true);
         break;
       default:
-        productList = await fetchProductListSection();
+        productList = await fetchProductList();
     }
 
     setPages([productList]);

@@ -27,6 +27,7 @@ export function SearchInput({ name, label, ...props }: InputProps) {
             name={name}
             type="text"
             id={name}
+            maxLength={50}
             {...props}
           />
         </div>
