@@ -34,7 +34,7 @@ If you like this project, hit the **STAR** button to bookmark it ⭐️
 
 ## Demonstration
 
-You can visit here to see the demo: https://next-shopify-storefront.vercel.app/
+You can visit here to see the demo: [https://next-shopify-storefront.vercel.app/](https://shopify-storefront-shop.vercel.app/)
 
 ## Installation
 
